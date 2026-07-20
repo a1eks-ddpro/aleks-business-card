@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Aleksander Dubowski — Developer, Photographer, Founder of DeDynamics.">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>Aleksander Dubowski</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0a0a0a;
+      --fg: #f5f5f5;
+      --muted: #888;
+      --accent: #e8e8e8;
+      --card: #141414;
+      --border: #2a2a2a;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #fafafa; --fg: #1a1a1a; --muted: #666;
+        --accent: #1a1a1a; --card: #ffffff; --border: #e0e0e0;
+      }
+    }
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      background: var(--bg); color: var(--fg);
+      min-height: 100vh; display: flex; flex-direction: column; line-height: 1.6;
+    }
+    .container {
+      max-width: 720px; margin: 0 auto; padding: 4rem 1.5rem;
+      width: 100%; flex: 1; display: flex; flex-direction: column; justify-content: center;
+    }
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 3rem; text-align: center;
+    }
+    .name {
+      font-size: clamp(2.5rem, 6vw, 3.5rem); font-weight: 700;
+      letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 0.5rem;
+    }
+    .title {
+      font-size: 1.125rem; color: var(--muted); font-weight: 400; margin-bottom: 2rem;
+    }
+    .title a {
+      color: var(--muted); text-decoration: none;
+      border-bottom: 1px solid var(--border); transition: color 0.2s, border-color 0.2s;
+    }
+    .title a:hover { color: var(--fg); border-color: var(--accent); }
+    .bio {
+      font-size: 1.125rem; line-height: 1.7; color: var(--fg);
+      margin-bottom: 2.5rem; max-width: 540px; margin-left: auto; margin-right: auto;
+    }
+    .bio a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
+    .bio a:hover { border-bottom-color: transparent; }
+    .divider { height: 1px; background: var(--border); margin: 2rem 0; border: none; }
+    .contact-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem; margin-bottom: 2rem;
+    }
+    .contact-item {
+      display: flex; flex-direction: column; align-items: center; gap: 0.375rem;
+      padding: 1rem; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; text-decoration: none; color: var(--fg);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .contact-item:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .contact-icon {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+      color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .contact-value { font-size: 0.9375rem; font-weight: 500; }
+    .social-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .social-link {
+      display: flex; align-items: center; justify-content: center;
+      width: 48px; height: 48px; border: 1px solid var(--border); border-radius: 50%;
+      color: var(--fg); text-decoration: none;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .social-link:hover { border-color: var(--accent); background: var(--bg); transform: translateY(-2px); }
+    .social-link svg { width: 22px; height: 22px; }
+    @media (max-width: 480px) {
+      .card { padding: 2rem 1.5rem; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <article class="card">
+      <h1 class="name">Aleksander Dubowski</h1>
+      <p class="title">Developer · Photographer · Founder, <a href="https://dedynamics.pro" target="_blank" rel="noopener">DeDynamics</a></p>
+      <p class="bio">
+        Self-taught software developer specializing in agentic AI infrastructure and SaaS.
+        Building for neurodivergent and enterprise applications.
+        Professional photographer (portfolio: <a href="https://daydream.photography" target="_blank" rel="noopener">daydream.photography</a>) — available on demand.
+      </p>
+      <hr class="divider">
+      <div class="contact-grid">
+        <a href="mailto:1@aleksdubowski.pro" class="contact-item">
+          <span class="contact-icon">Email</span>
+          <span class="contact-value">1@aleksdubowski.pro</span>
+        </a>
+        <a href="https://wa.me/31618688320" target="_blank" rel="noopener" class="contact-item">
+          <span class="contact-icon">WhatsApp</span>
+          <span class="contact-value">+31 618 688 320</span>
+        </a>
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/a1one-ddpro" target="_blank" rel="noopener" class="social-link" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+        <a href="https://x.com/aleksdaydreamer" target="_blank" rel="noopener" class="social-link" aria-label="X">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 9.24-3.306.522-8.496-9.234-8.497 9.234-3.307-.522 8.501-9.24-7.228-8.26h3.307l6.75 7.718 6.749-7.718z"/></svg>
+        </a>
+        <a href="https://daydream.photography" target="_blank" rel="noopener" class="social-link" aria-label="Photography Portfolio">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        </a>
+        <a href="https://instagram.com/daydream.shooter" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+      </div>
+    </article>
+  </div>
+</body>
+</html>
