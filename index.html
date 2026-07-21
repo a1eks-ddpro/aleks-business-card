@@ -147,8 +147,7 @@
       transform: translateX(-100%);
       transition: transform 0.3s ease;
     }
-    .hamburger-area:hover + .menu,
-    .menu:hover { transform: translateX(0); }
+    .menu.open { transform: translateX(0); }
     .menu a {
       display: block; padding: 0.75rem 0;
       color: var(--muted); text-decoration: none;
@@ -183,7 +182,7 @@
     @media (max-width: 768px) {
       .card { padding: 2rem 1.5rem; }
       .contact-grid { grid-template-columns: 1fr; max-width: 240px; }
-      .menu { width: 100%; }
+      .menu { width: min(280px, 75vw); }
       .hamburger-area { top: 0.75rem; left: 0.75rem; width: 40px; height: 40px; }
       .hamburger { width: 18px; height: 13px; }
       .hamburger span { height: 2px; }
@@ -312,45 +311,56 @@
 
   <script>
     (function() {
-      const viewports = document.getElementById('viewports');
-      const arrowUp = document.getElementById('arrow-up');
-      const arrowDown = document.getElementById('arrow-down');
-      const sections = document.querySelectorAll('.viewport');
-      let currentIndex = 0;
+      var viewports = document.getElementById('viewports');
+      var arrowUp = document.getElementById('arrow-up');
+      var arrowDown = document.getElementById('arrow-down');
+      var sections = document.querySelectorAll('.viewport');
+      var hamburger = document.querySelector('.hamburger-area');
+      var menu = document.querySelector('.menu');
+      var currentIndex = 0;
 
       arrowUp.addEventListener('click', function() {
-        if (currentIndex > 0) {
-          sections[currentIndex - 1].scrollIntoView({ behavior: 'smooth' });
-        }
+        if (currentIndex > 0) sections[currentIndex - 1].scrollIntoView({ behavior: 'smooth' });
       });
-
       arrowDown.addEventListener('click', function() {
-        if (currentIndex < sections.length - 1) {
-          sections[currentIndex + 1].scrollIntoView({ behavior: 'smooth' });
-        }
+        if (currentIndex < sections.length - 1) sections[currentIndex + 1].scrollIntoView({ behavior: 'smooth' });
       });
 
       var observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
           if (entry.isIntersecting) {
             currentIndex = Array.from(sections).indexOf(entry.target);
-            var isFirst = currentIndex === 0;
-            var isLast = currentIndex === sections.length - 1;
-            arrowUp.classList.toggle('visible', !isFirst);
-            arrowDown.classList.toggle('visible', !isLast);
+            arrowUp.classList.toggle('visible', currentIndex > 0);
+            arrowDown.classList.toggle('visible', currentIndex < sections.length - 1);
           }
         });
       }, { threshold: 0.5 });
-
       sections.forEach(function(s) { observer.observe(s); });
 
+      function closeMenu() { menu.classList.remove('open'); }
+      function toggleMenu() { menu.classList.toggle('open'); }
+
+      hamburger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleMenu();
+      });
+
       document.querySelectorAll('.menu a').forEach(function(a) {
-        a.addEventListener('click', function() {
+        a.addEventListener('click', function(e) {
+          closeMenu();
           var id = this.getAttribute('href').slice(1);
           var target = document.getElementById(id);
           if (target) target.scrollIntoView({ behavior: 'smooth' });
         });
       });
+
+      document.addEventListener('click', function(e) {
+        if (menu.classList.contains('open') && !menu.contains(e.target) && !hamburger.contains(e.target)) {
+          closeMenu();
+        }
+      });
+
+      menu.addEventListener('click', function(e) { e.stopPropagation(); });
     })();
   </script>
 </body>
