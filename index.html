@@ -51,21 +51,22 @@
       margin-bottom: 1.5rem; max-width: 540px; margin-left: auto; margin-right: auto;
     }
     .links-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 0.5rem;
       margin-bottom: 2rem;
       margin-left: auto; margin-right: auto;
-      max-width: 480px;
     }
     .links-grid a {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8125rem;
+      font-size: 0.75rem;
       color: var(--accent);
       text-decoration: none;
       border: 1px solid var(--border);
       border-radius: 6px;
-      padding: 0.5rem 0.75rem;
+      padding: 0.4rem 0.75rem;
+      white-space: nowrap;
       transition: border-color 0.2s, color 0.2s;
     }
     .links-grid a:hover {
