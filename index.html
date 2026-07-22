@@ -215,7 +215,20 @@
 
     /* ---------- mobile / tablet (≤768px) overrides ---------- */
     @media (max-width: 768px) {
-      .card { padding: 2rem 1.5rem; }
+      .card {
+        padding: 2rem 1.5rem;
+        max-height: calc(100vh - 3rem);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+      }
+      .card::-webkit-scrollbar { width: 3px; }
+      .card::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+      .bio {
+        font-size: 0.9375rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
       .contact-grid { grid-template-columns: 1fr; max-width: 240px; }
       .menu { width: min(280px, 75vw); }
       .hamburger-area { top: 0.75rem; left: 0.75rem; width: 40px; height: 40px; }
