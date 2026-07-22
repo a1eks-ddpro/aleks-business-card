@@ -49,23 +49,28 @@
 
     /* ---------- scroll-snap viewport container ---------- */
     .viewports {
-      height: 100vh; overflow-y: scroll; scroll-behavior: smooth;
+      height: 100vh; overflow-y: scroll;
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
       -webkit-overflow-scrolling: touch;
-      touch-action: none;
     }
     .viewport {
       height: 100vh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
       display: flex; align-items: center; justify-content: center;
       padding: 1.5rem;
     }
 
     /* ---------- card container (reused in every viewport) ---------- */
     .card {
-      max-width: 720px; width: 100%;
+      max-width: 720px; width: 100%; max-height: 100%;
       background: linear-gradient(var(--card), var(--card)) padding-box,
                   linear-gradient(135deg, var(--border), var(--accent)) border-box;
       border: 1px solid transparent;
       border-radius: 12px; padding: 3rem; text-align: center;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     /* ---------- landing-viewport typography ---------- */
@@ -493,7 +498,6 @@
       var menu = document.querySelector('.menu');
       var currentIndex = 0;
       var scrollCooldown = false;
-      var touchStartY = 0;
 
       /* ── scroll controller ── */
       function scrollToViewport(index) {
@@ -510,23 +514,6 @@
         e.preventDefault();
         scrollToViewport(currentIndex + (e.deltaY > 0 ? 1 : -1));
       }, { passive: false });
-
-      /* ── touch (mobile) ── */
-      viewports.addEventListener('touchstart', function(e) {
-        touchStartY = e.touches[0].clientY;
-      }, { passive: true });
-
-      viewports.addEventListener('touchmove', function(e) {
-        if (!scrollCooldown) e.preventDefault();
-      }, { passive: false });
-
-      viewports.addEventListener('touchend', function(e) {
-        if (scrollCooldown) return;
-        var deltaY = touchStartY - e.changedTouches[0].clientY;
-        if (Math.abs(deltaY) > 25) {
-          scrollToViewport(currentIndex + (deltaY > 0 ? 1 : -1));
-        }
-      }, { passive: true });
 
       /* ── snap correction — always land exactly on viewport ── */
       var snapTimer = null;
