@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<!-- ==============================================================
+  Aleksander Dubowski — Personal Business Card Site
+  Single-file HTML. Edit any section below.
+  - CSS starts at line ~28 (search "STYLE")
+  - HTML viewports start at line ~200 (search "VIEWPORTS")
+  - JS starts at line ~320 (search "SCRIPT")
+============================================================== -->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,10 +13,16 @@
   <meta name="description" content="Aleksander Dubowski — Developer, Photographer, Founder of DeDynamics.">
   <meta name="theme-color" content="#0a0a0a">
   <title>Aleksander Dubowski</title>
+  <!-- Fonts (Space Grotesk headings, JetBrains Mono labels) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- ============================================================
+    S T Y L E  —  all CSS starts here
+    ============================================================ -->
   <style>
+    /* ---------- reset + custom properties ---------- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --bg: #0a0a0a;
@@ -25,12 +38,16 @@
         --accent: #0d9488; --card: #ffffff; --border: #e0e0e0;
       }
     }
+
+    /* ---------- base layout ---------- */
     html { font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
     body {
       font-family: 'Space Grotesk', system-ui, sans-serif;
       background: var(--bg); color: var(--fg);
       overflow: hidden; height: 100vh; line-height: 1.6;
     }
+
+    /* ---------- scroll-snap viewport container ---------- */
     .viewports {
       height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory;
       scroll-behavior: smooth;
@@ -40,6 +57,8 @@
       display: flex; align-items: center; justify-content: center;
       padding: 1.5rem;
     }
+
+    /* ---------- card container (reused in every viewport) ---------- */
     .card {
       max-width: 720px; width: 100%;
       background: linear-gradient(var(--card), var(--card)) padding-box,
@@ -47,6 +66,8 @@
       border: 1px solid transparent;
       border-radius: 12px; padding: 3rem; text-align: center;
     }
+
+    /* ---------- landing-viewport typography ---------- */
     .name {
       font-size: clamp(2.5rem, 6vw, 3.5rem); font-weight: 700;
       letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 0.5rem;
@@ -58,6 +79,8 @@
       font-size: 1.125rem; line-height: 1.7; color: var(--fg);
       margin-bottom: 1.5rem; max-width: 540px; margin-left: auto; margin-right: auto;
     }
+
+    /* ---------- link badges (project URLs) ---------- */
     .links-grid {
       display: flex; flex-wrap: wrap; justify-content: center;
       gap: 0.5rem; margin-bottom: 2rem;
@@ -70,7 +93,11 @@
       transition: border-color 0.2s, color 0.2s;
     }
     .links-grid a:hover { border-color: var(--accent); color: var(--fg); }
+
+    /* ---------- section divider ---------- */
     .divider { height: 1px; background: var(--border); margin: 2rem 0; border: none; }
+
+    /* ---------- contact grid (email + whatsapp) ---------- */
     .contact-grid {
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 0.75rem; margin-bottom: 2rem; max-width: 360px;
@@ -89,6 +116,8 @@
       color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em;
     }
     .contact-value { font-size: 0.8125rem; font-weight: 500; }
+
+    /* ---------- social icon row ---------- */
     .social-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
     .social-link {
       display: flex; align-items: center; justify-content: center;
@@ -98,12 +127,15 @@
     }
     .social-link:hover { border-color: var(--accent); background: var(--bg); transform: translateY(-2px); }
     .social-link svg { width: 20px; height: 20px; }
+
+    /* ---------- footer ---------- */
     .footer {
       margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
       font-size: 0.75rem; color: var(--muted); text-align: center;
       font-family: 'JetBrains Mono', monospace;
     }
 
+    /* ---------- placeholder viewport components ---------- */
     .section-label {
       font-family: 'JetBrains Mono', monospace; font-size: 0.625rem;
       color: var(--muted); text-transform: uppercase; letter-spacing: 0.15em;
@@ -118,7 +150,7 @@
       max-width: 480px; margin: 0 auto;
     }
 
-    /* Hamburger */
+    /* ---------- hamburger button (gradient circle, fixed top-left) ---------- */
     .hamburger-area {
       position: fixed; top: 1.5rem; left: 1.5rem; z-index: 100;
       width: 48px; height: 48px; cursor: pointer;
@@ -139,6 +171,7 @@
       transition: background 0.2s;
     }
 
+    /* ---------- slide-in navigation menu ---------- */
     .menu {
       position: fixed; top: 0; left: 0; z-index: 99;
       width: 240px; height: 100vh;
@@ -161,7 +194,7 @@
       color: var(--muted); display: block; margin-top: 0.125rem;
     }
 
-    /* Arrows */
+    /* ---------- floating navigation arrows ---------- */
     .arrow {
       position: fixed; z-index: 50;
       width: 48px; height: 48px; cursor: pointer;
@@ -175,10 +208,12 @@
     }
     .arrow.visible { opacity: 1; pointer-events: auto; }
     .arrow:hover { transform: scale(1.12); box-shadow: 0 0 20px rgba(94, 234, 212, 0.3); }
+    /* desktop: arrows overlap bottom corners of centered 720px card */
     .arrow-up { bottom: 1.5rem; left: 50%; margin-left: -348px; }
     .arrow-down { bottom: 1.5rem; left: 50%; margin-left: 300px; }
     .arrow svg { width: 22px; height: 22px; }
 
+    /* ---------- mobile / tablet (≤768px) overrides ---------- */
     @media (max-width: 768px) {
       .card { padding: 2rem 1.5rem; }
       .contact-grid { grid-template-columns: 1fr; max-width: 240px; }
@@ -188,6 +223,7 @@
       .hamburger span { height: 2px; }
       .arrow { width: 44px; height: 44px; border-width: 2px; box-shadow: 0 0 18px rgba(94, 234, 212, 0.25); }
       .arrow svg { width: 20px; height: 20px; }
+      /* mobile: arrows sit in bottom screen corners */
       .arrow-up { bottom: 0.75rem; left: 0.75rem; margin-left: 0; }
       .arrow-down { bottom: 0.75rem; right: 0.75rem; left: auto; margin-left: 0; }
     }
@@ -195,11 +231,20 @@
 </head>
 <body>
 
+  <!-- ============================================================
+    H A M B U R G E R   B U T T O N
+    Click toggles menu open/close.
+    ============================================================ -->
   <div class="hamburger-area">
     <div class="hamburger">
       <span></span><span></span><span></span>
     </div>
   </div>
+
+  <!-- ============================================================
+    N A V I G A T I O N   M E N U
+    Links point to viewport-# ids below.
+    ============================================================ -->
   <nav class="menu">
     <a href="#viewport-0">Landing <span>Home</span></a>
     <a href="#viewport-1">About <span>Who I am</span></a>
@@ -208,6 +253,11 @@
     <a href="#viewport-4">Contact <span>Get in touch</span></a>
   </nav>
 
+  <!-- ============================================================
+    F L O A T I N G   A R R O W S
+    Up/down navigation between viewports.
+    Visibility controlled by IntersectionObserver in script.
+    ============================================================ -->
   <button class="arrow arrow-up" id="arrow-up" aria-label="Scroll up">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
@@ -215,10 +265,17 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
   </button>
 
+  <!-- ============================================================
+    V I E W P O R T S
+    Each .viewport fills 100vh with scroll-snap.
+    Add / remove / reorder sections here.
+    ============================================================ -->
   <div class="viewports" id="viewports">
 
+    <!-- ===== VIEWPORT 0 — LANDING ===== -->
     <section class="viewport" id="viewport-0">
       <article class="card">
+        <!-- EDIT: name / title / bio -->
         <h1 class="name">Aleks Dubowski</h1>
         <p class="title">Software Developer · Founder · Photographer</p>
         <p class="bio">
@@ -226,12 +283,17 @@
           Building for neurodivergent and enterprise applications.
           Professional photographer — available on demand.
         </p>
+
+        <!-- EDIT: project link badges -->
         <div class="links-grid">
           <a href="https://dedynamics.pro" target="_blank" rel="noopener">dedynamics.pro</a>
           <a href="https://amethyst-toolkit.pro" target="_blank" rel="noopener">amethyst-toolkit.pro</a>
           <a href="https://daydream.photography" target="_blank" rel="noopener">daydream.photography</a>
         </div>
+
         <hr class="divider">
+
+        <!-- EDIT: contact info -->
         <div class="contact-grid">
           <a href="mailto:1@aleksdubowski.pro" class="contact-item">
             <span class="contact-icon">Email</span>
@@ -241,7 +303,10 @@
             <span class="contact-icon">WhatsApp</span>
             <span class="contact-value">+31 618 688 320</span>
           </a>
+          <!-- ADD more contact items here as <a class="contact-item">...</a> -->
         </div>
+
+        <!-- EDIT: social icon links -->
         <div class="social-links">
           <a href="https://github.com/a1eks-ddpro" target="_blank" rel="noopener" class="social-link" aria-label="GitHub">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
@@ -258,57 +323,146 @@
           <a href="https://instagram.com/daydream.shooter" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
           </a>
+          <!-- ADD more social links here -->
         </div>
+
+        <!-- EDIT: footer text -->
         <div class="footer">©2026 Aleks D.</div>
       </article>
     </section>
 
+    <!-- ===== VIEWPORT 1 — ABOUT ===== -->
     <section class="viewport" id="viewport-1">
       <article class="card">
         <p class="section-label">About</p>
         <h2 class="section-heading">Who I Am</h2>
-        <p class="sample-text">
-          This section will tell the story behind the work. Background, philosophy,
-          and what drives the craft. Placeholder content for now — real copy coming soon.
+        <p class="bio" style="text-align:left">
+          Self-taught software developer, systems designer and founder of DeDynamics.
+          Based in Heerenveen, the Netherlands.
+        </p>
+        <p class="bio" style="text-align:left">
+          I learn by building. When I do not know something, I say so and work it out.
+          When I know something and I am good at it, I do not pretend otherwise.
+        </p>
+        <p class="bio" style="text-align:left">
+          I am neurodivergent. That is not a marketing angle. It directly affects how I think,
+          work and design software. I care about clear interfaces, persistent context and
+          systems that reduce unnecessary mental work.
+        </p>
+        <p class="bio" style="text-align:left">
+          I was a photographer before I became a developer, and I still am one.
+          Photography taught me to notice structure, detail and what does not belong in the frame.
         </p>
       </article>
     </section>
 
+    <!-- ===== VIEWPORT 2 — EXPERTISE ===== -->
     <section class="viewport" id="viewport-2">
       <article class="card">
         <p class="section-label">Expertise</p>
         <h2 class="section-heading">What I Do</h2>
-        <p class="sample-text">
-          Agentic AI infrastructure, SaaS architecture, full-stack development,
-          systems design. Placeholder content — details to be filled.
-        </p>
+        <div style="text-align:left;max-width:540px;margin:0 auto">
+          <p class="bio"><strong>Agentic AI Systems</strong><br>
+          I design and build distributed agent networks: MCP services, multi-agent coordination,
+          shared tools, session recovery and persistent context across models and machines.</p>
+          <p class="bio"><strong>Bionic Persistent Memory</strong><br>
+          Bionic MaxMem is the most ambitious part of my infrastructure work. It is designed to
+          keep agents oriented across sessions, crashes, workstations and model changes. It is
+          not another chat-history wrapper.</p>
+          <p class="bio"><strong>Software Development</strong><br>
+          TypeScript, JavaScript, React and Node.js. I build frontends, backends, APIs,
+          authentication and deployment as parts of one system, usually on Cloudflare.</p>
+          <p class="bio"><strong>Product Development</strong><br>
+          I build from problems I actually understand. Amethyst Mapper began as a tool for
+          managing my own projects. I used it to plan and develop its public version, and I now
+          use it to build the next versions. It is an integrated mind-mapping platform, not an IDE.</p>
+        </div>
       </article>
     </section>
 
+    <!-- ===== VIEWPORT 3 — WORK / PROJECTS ===== -->
     <section class="viewport" id="viewport-3">
       <article class="card">
         <p class="section-label">Work</p>
         <h2 class="section-heading">Projects</h2>
-        <p class="sample-text">
-          DDpro-Net, Amethyst Mapper+, DeCogSys Max, and more.
-          Placeholder content — project descriptions and links coming.
-        </p>
+        <div style="text-align:left;max-width:540px;margin:0 auto">
+          <p class="bio"><strong>DeDynamics</strong><br>
+          My company and the parent structure for my software, AI and creative work.</p>
+          <p class="bio"><strong>DDpro-Net</strong><br>
+          A distributed agent network connecting multiple AI agents, MCP services, tools
+          and shared Bionic MaxMem across machines and sessions.</p>
+          <p class="bio"><strong>Amethyst Mapper / Mapper+</strong><br>
+          An integrated mind-mapping platform for planning, research and complex project work.
+          Mapper FFA is local-first. Mapper+ adds managed, AI-assisted workflows.</p>
+          <p class="bio"><strong>DeCogSys Max</strong><br>
+          My working architecture for persistent context, memory, role separation and coordination
+          between people and AI agents.</p>
+          <p class="bio"><strong>Daydream Shooter's Studio</strong><br>
+          My photography practice. Portrait, event, product and conceptual work,
+          available selectively. (<a href="https://daydream.photography" target="_blank" style="color:var(--accent)">daydream.photography</a>)</p>
+        </div>
       </article>
     </section>
 
+    <!-- ===== VIEWPORT 4 — CONTACT ===== -->
     <section class="viewport" id="viewport-4">
       <article class="card">
         <p class="section-label">Contact</p>
         <h2 class="section-heading">Get in Touch</h2>
-        <p class="sample-text">
-          Reach out for collaborations, inquiries, or just to connect.
-          Placeholder — contact form or direct details coming.
+        <p class="bio">
+          No contact form. Contact me directly.
         </p>
+        <p class="bio">
+          Open to software work, technical collaboration, product discussions and
+          selected photography assignments.
+        </p>
+        <div class="contact-grid">
+          <a href="mailto:1@aleksdubowski.pro" class="contact-item">
+            <span class="contact-icon">Email</span>
+            <span class="contact-value">1@aleksdubowski.pro</span>
+          </a>
+          <a href="https://wa.me/31618688320" target="_blank" rel="noopener" class="contact-item">
+            <span class="contact-icon">WhatsApp</span>
+            <span class="contact-value">+31 618 688 320</span>
+          </a>
+        </div>
+        <div style="text-align:left;max-width:360px;margin:0 auto">
+          <p class="bio" style="margin-top:1rem">
+            <strong>Email</strong> — best for projects and anything that needs proper context.
+          </p>
+          <p class="bio">
+            <strong>WhatsApp</strong> — best for short questions and direct conversation.
+          </p>
+          <p class="bio" style="margin-top:1rem">
+            Based in Heerenveen, the Netherlands. Available remotely and on location.
+          </p>
+          <p class="bio">
+            I read my messages myself. You will not receive an automated sales reply.
+          </p>
+        </div>
       </article>
     </section>
 
+    <!-- ===== ADD MORE VIEWPORTS HERE =====
+      Copy this block:
+      <section class="viewport" id="viewport-5">
+        <article class="card">
+          <p class="section-label">Label</p>
+          <h2 class="section-heading">Heading</h2>
+          <p class="sample-text">Content...</p>
+        </article>
+      </section>
+      Then add a link in the <nav class="menu"> above:
+      <a href="#viewport-5">Label <span>sub</span></a>
+    -->
+
   </div>
 
+  <!-- ============================================================
+    S C R I P T
+    Arrow visibility (IntersectionObserver), hamburger toggle,
+    menu close-on-link-click, close-on-outside-click.
+    ============================================================ -->
   <script>
     (function() {
       var viewports = document.getElementById('viewports');
@@ -319,6 +473,7 @@
       var menu = document.querySelector('.menu');
       var currentIndex = 0;
 
+      /* arrow click — scroll to previous / next viewport */
       arrowUp.addEventListener('click', function() {
         if (currentIndex > 0) sections[currentIndex - 1].scrollIntoView({ behavior: 'smooth' });
       });
@@ -326,6 +481,7 @@
         if (currentIndex < sections.length - 1) sections[currentIndex + 1].scrollIntoView({ behavior: 'smooth' });
       });
 
+      /* IntersectionObserver — track current viewport, show/hide arrows */
       var observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
           if (entry.isIntersecting) {
@@ -337,6 +493,7 @@
       }, { threshold: 0.5 });
       sections.forEach(function(s) { observer.observe(s); });
 
+      /* hamburger toggle */
       function closeMenu() { menu.classList.remove('open'); }
       function toggleMenu() { menu.classList.toggle('open'); }
 
@@ -345,6 +502,7 @@
         toggleMenu();
       });
 
+      /* menu link click — close menu, scroll to target */
       document.querySelectorAll('.menu a').forEach(function(a) {
         a.addEventListener('click', function(e) {
           closeMenu();
@@ -354,12 +512,14 @@
         });
       });
 
+      /* click outside menu — close */
       document.addEventListener('click', function(e) {
         if (menu.classList.contains('open') && !menu.contains(e.target) && !hamburger.contains(e.target)) {
           closeMenu();
         }
       });
 
+      /* prevent outside-close from firing when clicking inside the menu */
       menu.addEventListener('click', function(e) { e.stopPropagation(); });
     })();
   </script>
