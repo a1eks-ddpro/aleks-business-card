@@ -215,25 +215,28 @@
 
     /* ---------- mobile / tablet (≤768px) overrides ---------- */
     @media (max-width: 768px) {
-      .card {
-        padding: 2rem 1.5rem;
-        max-height: calc(100vh - 3rem);
-        overflow-y: auto;
-        overscroll-behavior: contain;
-        -webkit-overflow-scrolling: touch;
-      }
-      .card::-webkit-scrollbar { width: 3px; }
-      .card::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+      .card { padding: 1.5rem 1.25rem; }
       .bio {
-        font-size: 0.9375rem;
-        line-height: 1.6;
-        margin-bottom: 1rem;
+        font-size: clamp(0.8125rem, 2vh, 1rem);
+        line-height: 1.55;
+        margin-bottom: 0.75rem;
       }
+      .bio:last-child { margin-bottom: 0; }
       .contact-grid { grid-template-columns: 1fr; max-width: 240px; }
       .menu { width: min(280px, 75vw); }
       .hamburger-area { top: 0.75rem; left: 0.75rem; width: 40px; height: 40px; }
       .hamburger { width: 18px; height: 13px; }
       .hamburger span { height: 2px; }
+      .name { font-size: clamp(2rem, 8vw, 2.5rem); margin-bottom: 0.25rem; }
+      .title { font-size: 0.875rem; margin-bottom: 1.25rem; }
+      .section-label { font-size: 0.5625rem; margin-bottom: 0.5rem; }
+      .section-heading {
+        font-size: clamp(1.25rem, 5vw, 1.5rem);
+        margin-bottom: 0.75rem;
+      }
+      .divider { margin: 1.25rem 0; }
+      .contact-item { padding: 0.5rem 0.5rem; }
+      .footer { margin-top: 1.5rem; padding-top: 1rem; }
       .arrow { width: 44px; height: 44px; border-width: 2px; box-shadow: 0 0 18px rgba(94, 234, 212, 0.25); }
       .arrow svg { width: 20px; height: 20px; }
       /* mobile: arrows sit in bottom screen corners */
