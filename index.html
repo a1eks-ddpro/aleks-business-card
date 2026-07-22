@@ -49,11 +49,11 @@
 
     /* ---------- scroll-snap viewport container ---------- */
     .viewports {
-      height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory;
-      scroll-behavior: smooth;
+      height: 100vh; overflow-y: scroll; scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
     }
     .viewport {
-      height: 100vh; scroll-snap-align: start;
+      height: 100vh;
       display: flex; align-items: center; justify-content: center;
       padding: 1.5rem;
     }
@@ -491,16 +491,51 @@
       var hamburger = document.querySelector('.hamburger-area');
       var menu = document.querySelector('.menu');
       var currentIndex = 0;
+      var scrollCooldown = false;
+      var touchStartY = 0;
+      var touchActive = false;
 
-      /* arrow click — scroll to previous / next viewport */
-      arrowUp.addEventListener('click', function() {
-        if (currentIndex > 0) sections[currentIndex - 1].scrollIntoView({ behavior: 'smooth' });
-      });
-      arrowDown.addEventListener('click', function() {
-        if (currentIndex < sections.length - 1) sections[currentIndex + 1].scrollIntoView({ behavior: 'smooth' });
-      });
+      /* ── scroll controller ── */
+      function scrollToViewport(index) {
+        if (index < 0 || index >= sections.length) return;
+        if (scrollCooldown) return;
+        scrollCooldown = true;
+        viewports.scrollTo({ top: sections[index].offsetTop, behavior: 'smooth' });
+        setTimeout(function() { scrollCooldown = false; }, 500);
+      }
 
-      /* IntersectionObserver — track current viewport, show/hide arrows */
+      /* ── wheel (desktop) ── */
+      viewports.addEventListener('wheel', function(e) {
+        if (scrollCooldown) return;
+        e.preventDefault();
+        scrollToViewport(currentIndex + (e.deltaY > 0 ? 1 : -1));
+      }, { passive: false });
+
+      /* ── touch (mobile) ── */
+      viewports.addEventListener('touchstart', function(e) {
+        touchStartY = e.touches[0].clientY;
+        touchActive = true;
+      }, { passive: true });
+
+      viewports.addEventListener('touchmove', function(e) {
+        if (!touchActive || scrollCooldown) return;
+        var deltaY = touchStartY - e.touches[0].clientY;
+        if (Math.abs(deltaY) > 12) {
+          touchActive = false;
+          e.preventDefault();
+          scrollToViewport(currentIndex + (deltaY > 0 ? 1 : -1));
+        }
+      }, { passive: false });
+
+      viewports.addEventListener('touchend', function() {
+        touchActive = false;
+      }, { passive: true });
+
+      /* ── arrow buttons ── */
+      arrowUp.addEventListener('click', function() { scrollToViewport(currentIndex - 1); });
+      arrowDown.addEventListener('click', function() { scrollToViewport(currentIndex + 1); });
+
+      /* ── IntersectionObserver — track active viewport, show/hide arrows ── */
       var observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
           if (entry.isIntersecting) {
@@ -512,7 +547,7 @@
       }, { threshold: 0.5 });
       sections.forEach(function(s) { observer.observe(s); });
 
-      /* hamburger toggle */
+      /* ── hamburger toggle ── */
       function closeMenu() { menu.classList.remove('open'); }
       function toggleMenu() { menu.classList.toggle('open'); }
 
@@ -521,24 +556,24 @@
         toggleMenu();
       });
 
-      /* menu link click — close menu, scroll to target */
       document.querySelectorAll('.menu a').forEach(function(a) {
         a.addEventListener('click', function(e) {
           closeMenu();
           var id = this.getAttribute('href').slice(1);
           var target = document.getElementById(id);
-          if (target) target.scrollIntoView({ behavior: 'smooth' });
+          if (target) {
+            var idx = Array.from(sections).indexOf(target);
+            scrollToViewport(idx);
+          }
         });
       });
 
-      /* click outside menu — close */
       document.addEventListener('click', function(e) {
         if (menu.classList.contains('open') && !menu.contains(e.target) && !hamburger.contains(e.target)) {
           closeMenu();
         }
       });
 
-      /* prevent outside-close from firing when clicking inside the menu */
       menu.addEventListener('click', function(e) { e.stopPropagation(); });
     })();
   </script>
