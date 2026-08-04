@@ -13,6 +13,27 @@
   <meta name="description" content="Aleksander Dubowski — Developer, Photographer, Founder of DeDynamics.">
   <meta name="theme-color" content="#0a0a0a">
   <title>Aleksander Dubowski</title>
+
+  <!-- Favicons / brand -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+  <!-- Open Graph / social sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aleksander Dubowski">
+  <meta property="og:title" content="Aleksander Dubowski — Developer, Photographer, Founder of DeDynamics">
+  <meta property="og:description" content="Self-taught software developer specializing in agentic AI infrastructure and SaaS. Professional photographer — available on demand.">
+  <meta property="og:url" content="https://aleksdubowski.pro">
+  <meta property="og:image" content="https://aleksdubowski.pro/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Aleksander Dubowski — Developer, Photographer, Founder of DeDynamics">
+  <meta name="twitter:description" content="Self-taught software developer specializing in agentic AI infrastructure and SaaS. Professional photographer — available on demand.">
+  <meta name="twitter:image" content="https://aleksdubowski.pro/assets/og-image.png">
+
   <!-- Fonts (Space Grotesk headings, JetBrains Mono labels) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,6 +58,7 @@
         --bg: #fafafa; --fg: #1a1a1a; --muted: #666;
         --accent: #0d9488; --card: #ffffff; --border: #e0e0e0;
       }
+      .brand-logo { filter: invert(1); }
     }
 
     /* ---------- base layout ---------- */
@@ -74,6 +96,10 @@
     }
 
     /* ---------- landing-viewport typography ---------- */
+    .brand-logo {
+      width: 72px; height: 72px; margin: 0 auto 1.25rem;
+      display: block; border-radius: 12px;
+    }
     .name {
       font-size: clamp(2.5rem, 6vw, 3.5rem); font-weight: 700;
       letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 0.5rem;
@@ -297,6 +323,9 @@
     <!-- ===== VIEWPORT 0 — LANDING ===== -->
     <section class="viewport" id="viewport-0">
       <article class="card">
+        <!-- EDIT: logo -->
+        <img class="brand-logo" src="/assets/logo.svg" alt="Aleks Dubowski logo" width="72" height="72">
+
         <!-- EDIT: name / title / bio -->
         <h1 class="name">Aleks Dubowski</h1>
         <p class="title">Software Developer · Founder · Photographer</p>
